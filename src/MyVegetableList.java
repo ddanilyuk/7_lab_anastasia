@@ -113,7 +113,7 @@ public class MyVegetableList implements List<Vegetable> {
 
     @Override
     public void clear() {
-
+        size = 0;
     }
 
     @Override
