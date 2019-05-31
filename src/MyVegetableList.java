@@ -16,6 +16,11 @@ public class MyVegetableList implements List<Vegetable> {
         add(vegetable);
     }
 
+    public MyVegetableList(Collection<Vegetable> collection){
+        this();
+        this.addAll(collection);
+    }
+
     @Override
     public int size() {
         return size;
@@ -23,11 +28,21 @@ public class MyVegetableList implements List<Vegetable> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean contains(Object o) throws NullPointerException {
+        if (this.isEmpty()) { throw new NullPointerException(); }
+        if (this.head.getData().equals(o)) { return true; }
+
+        Node next = head.getNext();
+        while (next != null) {
+            if (next.getData().equals(o)) {
+                return true;
+            }
+            next = next.getNext();
+        }
         return false;
     }
 
@@ -55,7 +70,7 @@ public class MyVegetableList implements List<Vegetable> {
             @Override
             public Vegetable next() {
                 Node result = currentNode;
-                if (currentNode != null) {
+                if (hasNext()) {
                     currentNode = currentNode.getNext();
                 } else {
                     throw new NoSuchElementException();
@@ -82,7 +97,7 @@ public class MyVegetableList implements List<Vegetable> {
     }
 
     @Override
-    public boolean remove(Object o) {
+    public boolean remove(Object vegetable) {
         return false;
     }
 
@@ -114,6 +129,8 @@ public class MyVegetableList implements List<Vegetable> {
     @Override
     public void clear() {
         size = 0;
+        head = null;
+        tail = null;
     }
 
     @Override
