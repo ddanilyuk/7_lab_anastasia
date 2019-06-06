@@ -9,29 +9,38 @@ public class MyVegetableList implements List<Vegetable> {
 
     private int size;
 
-    public MyVegetableList() {
+    static void separator(String title) {
+        System.out.println("\n========" + title + "========");
+    }
+
+    MyVegetableList() {
         size = 0;
     }
 
-    public MyVegetableList(Vegetable vegetable) {
+
+    MyVegetableList(Vegetable vegetable) {
         this();
         add(vegetable);
     }
 
-    public MyVegetableList(Collection<Vegetable> collection) {
+
+    MyVegetableList(Collection<Vegetable> collection) {
         this();
         this.addAll(collection);
     }
+
 
     @Override
     public int size() {
         return size;
     }
 
+
     @Override
     public boolean isEmpty() {
         return size == 0;
     }
+
 
     @Override
     public boolean contains(Object o) throws NullPointerException {
@@ -67,10 +76,7 @@ public class MyVegetableList implements List<Vegetable> {
         return arr;
     }
 
-    //    @Override
-//    public <T> T[] toArray(T[] a) {
-//        return null;
-//    }
+
     @Override
     public <T1> T1[] toArray(@NotNull T1[] a) {
         if (!(a instanceof MyVegetableList[])) throw new ArrayStoreException();
@@ -85,6 +91,7 @@ public class MyVegetableList implements List<Vegetable> {
         }
         return a;
     }
+
 
     @Override
     public Iterator<Vegetable> iterator() {
@@ -125,6 +132,7 @@ public class MyVegetableList implements List<Vegetable> {
         return true;
     }
 
+
     @Override
     public boolean remove(Object o) {
         if (!this.contains(o)) {
@@ -149,6 +157,7 @@ public class MyVegetableList implements List<Vegetable> {
         return true;
     }
 
+
     @Override
     public boolean containsAll(Collection<?> c) {
         if (c.size() > size()) {
@@ -171,9 +180,38 @@ public class MyVegetableList implements List<Vegetable> {
         return true;
     }
 
+
+    //    @Override
+//    public boolean addAll(int index, Collection<? extends Vegetable> c) {
+//        return false;
+//    }
     @Override
-    public boolean addAll(int index, Collection<? extends Vegetable> c) {
-        return false;
+    public boolean addAll(int index, @NotNull Collection<? extends Vegetable> c) throws IllegalArgumentException {
+        if (index > this.size()) {
+            throw new IllegalArgumentException();
+        }
+
+        Node from = head;
+        for (int i = 0; i < index; ++i) {
+            System.out.println(i);
+            from = from.getNext();
+        }
+        System.out.println("1breakpoint");
+        Node temp = tail;
+
+        tail = from.getPrevious();
+        System.out.println("2breakpoint");
+
+        this.addAll(c);
+        System.out.println("3breakpoint");
+
+        tail.setNext(temp);
+        temp.setPrevious(tail);
+        System.out.println("4breakpoint");
+
+        tail = temp;
+
+        return true;
     }
 
     @Override
