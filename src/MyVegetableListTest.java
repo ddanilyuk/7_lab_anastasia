@@ -62,6 +62,7 @@ public class MyVegetableListTest {
     @Test
     public void add() {
         Assert.assertTrue(one.add(pomidor));
+        Assert.assertTrue(one.contains(pomidor));
     }
 
 

@@ -308,4 +308,28 @@ public class MyVegetableList implements List<Vegetable> {
     public List<Vegetable> subList(int fromIndex, int toIndex) {
         return null;
     }
+
+//    @Override
+//    public List<Vegetable> subList(int fromIndex, int toIndex)
+//            throws IndexOutOfBoundsException {
+//        if (fromIndex > toIndex && toIndex > this.size() && fromIndex < 0) {
+//            throw new IndexOutOfBoundsException();
+//        }
+//        int size = toIndex - fromIndex;
+//        List<Vegetable> sublist = new MyVegetableList();
+//
+//        Node forHead = head;
+//        for (int i = 0; i < fromIndex; ++i) forHead = forHead.getNext();
+//
+//        Node forTail = tail;
+//        for (int i = this.size() - 1; i > this.size() - fromIndex - size; --i)  forTail = forTail.getPrevious();
+//
+//        head = forHead;
+//        tail = forTail;
+//        head.setPrevious(null);
+//        tail.setNext(null);
+//        this.size = size;
+//
+//        return sublist;
+//    }
 }
