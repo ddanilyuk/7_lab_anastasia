@@ -1,3 +1,5 @@
+import com.sun.istack.internal.NotNull;
+
 import java.util.*;
 
 
@@ -16,7 +18,7 @@ public class MyVegetableList implements List<Vegetable> {
         add(vegetable);
     }
 
-    public MyVegetableList(Collection<Vegetable> collection){
+    public MyVegetableList(Collection<Vegetable> collection) {
         this();
         this.addAll(collection);
     }
@@ -33,8 +35,12 @@ public class MyVegetableList implements List<Vegetable> {
 
     @Override
     public boolean contains(Object o) throws NullPointerException {
-        if (this.isEmpty()) { throw new NullPointerException(); }
-        if (this.head.getData().equals(o)) { return true; }
+        if (this.isEmpty()) {
+            throw new NullPointerException();
+        }
+        if (this.head.getData().equals(o)) {
+            return true;
+        }
 
         Node next = head.getNext();
         while (next != null) {
@@ -49,12 +55,35 @@ public class MyVegetableList implements List<Vegetable> {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Node next = head;
+        Object[] arr = new Object[this.size()];
+        int i = 0;
+
+        while (next != null) {
+            arr[i] = next.getData();
+            next = next.getNext();
+            ++i;
+        }
+        return arr;
     }
 
+    //    @Override
+//    public <T> T[] toArray(T[] a) {
+//        return null;
+//    }
     @Override
-    public <T> T[] toArray(T[] a) {
-        return null;
+    public <T1> T1[] toArray(@NotNull T1[] a) {
+        if (!(a instanceof MyVegetableList[])) throw new ArrayStoreException();
+        if (this.size() > a.length) {
+            return (T1[]) this.toArray();
+        }
+
+        int i = 0;
+        for (Object obj : this.toArray()) {
+            a[i] = (T1) obj;
+            ++i;
+        }
+        return a;
     }
 
     @Override
@@ -97,18 +126,49 @@ public class MyVegetableList implements List<Vegetable> {
     }
 
     @Override
-    public boolean remove(Object vegetable) {
-        return false;
+    public boolean remove(Object o) {
+        if (!this.contains(o)) {
+            System.out.println("Already not in collection");
+            return false;
+        }
+        Node current = head;
+        if (current.getData().equals(o)) {
+            head = current.getNext();
+            size -= 1;
+            return true;
+        }
+        Node previous = null;
+        while (current != null) {
+            if (current.getData().equals(o)) {
+                previous.setNext(current.getNext());
+                return true;
+            }
+            previous = current;
+            current = current.getNext();
+        }
+        return true;
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
+        if (c.size() > size()) {
+            return false;
+        }
+        for (Object obj : c) {
+            if (!this.contains(obj)) {
+                return false;
+            }
+        }
+        return true;
     }
+
 
     @Override
     public boolean addAll(Collection<? extends Vegetable> c) {
-        return false;
+        for (Vegetable vegetable : c) {
+            this.add(vegetable);
+        }
+        return true;
     }
 
     @Override
@@ -118,12 +178,21 @@ public class MyVegetableList implements List<Vegetable> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        return false;
+        for (Object obj : c) {
+            this.remove(obj);
+        }
+        return true;
     }
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return false;
+        for (Object obj : this) {
+            if (!c.contains(obj)) {
+                System.out.println(obj);
+                this.remove(obj);
+            }
+        }
+        return true;
     }
 
     @Override
@@ -134,43 +203,105 @@ public class MyVegetableList implements List<Vegetable> {
     }
 
     @Override
-    public Vegetable get(int index) {
-        return null;
+    public Vegetable get(int index) throws IndexOutOfBoundsException {
+        if (index >= this.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        Node which = head;
+        for (int i = 0; i < index; ++i) {
+            which = which.getNext();
+        }
+
+        return (Vegetable) which.getData();
     }
 
     @Override
-    public Vegetable set(int index, Vegetable element) {
-        return null;
+    public Vegetable set(int index, Vegetable element)
+            throws IndexOutOfBoundsException {
+        if (index > this.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (index == this.size()) {
+            this.add(element);
+            return (Vegetable) tail.getPrevious().getData();
+        }
+        if (index == 0) {
+            Node oldHead = head;
+            head = new Node();
+            head.setData(element);
+            this.head.setNext(oldHead);
+            oldHead.setPrevious(this.head);
+            size += 1;
+            return (Vegetable) this.head.getData();
+        }
+
+        Node from = this.head;
+        for (int i = 1; i < index; ++i) {
+            from = from.getNext();
+        }
+
+        Node temp = tail;
+        Node next = from.getNext();
+        tail = from;
+        this.add(element);
+
+        tail.setNext(next);
+        if (next != null)
+            next.setPrevious(tail);
+        tail = temp;
+
+        return (Vegetable) from.getData();
     }
 
     @Override
-    public void add(int index, Vegetable element) {
-
+    public void add(int index, Vegetable element) throws IndexOutOfBoundsException {
+        this.set(index + 1, element);
     }
 
     @Override
     public Vegetable remove(int index) {
-        return null;
+        Vegetable which = this.get(index);
+        this.remove(which);
+        return which;
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+        Node node = head;
+        for (int i = 0; i < this.size(); ++i) {
+            if (node.getData().equals(o)) {
+                return i;
+            }
+            node = node.getNext();
+        }
+        return -1;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        Node node = tail;
+        for (int i = this.size() - 1; i >= 0; --i) {
+            if (node.getData().equals(o)) {
+                return i;
+            }
+            node = node.getPrevious();
+        }
+        return -1;
     }
 
     @Override
     public ListIterator<Vegetable> listIterator() {
-        return null;
+        return (ListIterator<Vegetable>) this.iterator();
     }
 
     @Override
     public ListIterator<Vegetable> listIterator(int index) {
-        return null;
+        if (index < 0 || index > this.size())
+            throw new IndexOutOfBoundsException();
+        ListIterator<Vegetable> listIterator = this.listIterator();
+        for (int i = 0; i < index; ++i) listIterator.next();
+        return listIterator;
     }
 
     @Override
