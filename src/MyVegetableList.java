@@ -126,6 +126,7 @@ public class MyVegetableList implements List<Vegetable> {
             tail = node;
         } else {
             tail.setNext(node);
+            node.setPrevious(tail);
             tail = node;
         }
         size++;
@@ -198,17 +199,16 @@ public class MyVegetableList implements List<Vegetable> {
         }
         System.out.println("1breakpoint");
         Node temp = tail;
-
         tail = from.getPrevious();
+
         System.out.println("2breakpoint");
-
         this.addAll(c);
-        System.out.println("3breakpoint");
 
+        System.out.println("3breakpoint");
         tail.setNext(temp);
         temp.setPrevious(tail);
-        System.out.println("4breakpoint");
 
+        System.out.println("4breakpoint");
         tail = temp;
 
         return true;

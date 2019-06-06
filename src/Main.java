@@ -93,7 +93,8 @@ public class Main {
             System.out.println(vegetable);
         }
         System.out.println("add");
-        //myVegetableList.addAll(4, myVegetableList2);
+        //todo try to fix addALL
+        //myVegetableList.addAll(0, myVegetableList2);
         for (Vegetable vegetable : myVegetableList) {
             System.out.println(vegetable);
         }
