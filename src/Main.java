@@ -13,7 +13,7 @@ public class Main {
 
         myVegetableList.add(pomidor);
         myVegetableList.add(cucumber);
-        myVegetableList.add(pomidor);
+        myVegetableList.add(kapusta);
         myVegetableList2.add(pomidor);
 
 
@@ -64,7 +64,8 @@ public class Main {
         */
 
         MyVegetableList.separator("retainAll");
-        System.out.println(myVegetableList.retainAll(myVegetableList2));
+        myVegetableList.retainAll(myVegetableList2);
+        System.out.println(Arrays.toString(myVegetableList.toArray()));
 
 
         MyVegetableList.separator("Try if contains");
@@ -82,19 +83,22 @@ public class Main {
         MyVegetableList.separator("Get some elements");
         System.out.println(myVegetableList.get(1));
 
+        myVegetableList.add(cucumber);
+        System.out.println(myVegetableList.get(2));
 
-        MyVegetableList.separator("AddALL");
-        System.out.println("1");
+
+
+        MyVegetableList.separator("firstList");
         for (Vegetable vegetable : myVegetableList) {
             System.out.println(vegetable);
         }
-        System.out.println("2");
+        MyVegetableList.separator("secondList");
+
         for (Vegetable vegetable : myVegetableList2) {
             System.out.println(vegetable);
         }
-        System.out.println("add");
-        //todo try to fix addALL
-        //myVegetableList.addAll(0, myVegetableList2);
+        MyVegetableList.separator("adding to index 1");
+        myVegetableList.addAll(1, myVegetableList2);
         for (Vegetable vegetable : myVegetableList) {
             System.out.println(vegetable);
         }
