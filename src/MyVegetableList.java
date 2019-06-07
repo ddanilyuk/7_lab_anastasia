@@ -51,7 +51,7 @@ public class MyVegetableList implements List<Vegetable> {
             return true;
         }
 
-        Node next = head.getNext();
+        Node next = this.head.getNext();
         while (next != null) {
             if (next.getData().equals(o)) {
                 return true;
@@ -64,7 +64,7 @@ public class MyVegetableList implements List<Vegetable> {
 
     @Override
     public Object[] toArray() {
-        Node next = head;
+        Node next = this.head;
         Object[] arr = new Object[this.size()];
         int i = 0;
 
@@ -126,10 +126,10 @@ public class MyVegetableList implements List<Vegetable> {
             System.out.println("Already not in collection");
             return false;
         }
-        Node current = head;
+        Node current = this.head;
         if (current.getData().equals(o)) {
-            head = current.getNext();
-            head.setPrevious(null);
+            this.head = current.getNext();
+            this.head.setPrevious(null);
 
             return true;
         }
@@ -197,7 +197,7 @@ public class MyVegetableList implements List<Vegetable> {
     @Override
     public void clear() {
         this.size = 0;
-        head = null;
+        this.head = null;
         tail = null;
     }
 
@@ -207,7 +207,7 @@ public class MyVegetableList implements List<Vegetable> {
             throw new IndexOutOfBoundsException();
         }
 
-        Node which = head;
+        Node which = this.head;
         for (int i = 0; i < index; ++i) {
             which = which.getNext();
         }
@@ -226,13 +226,13 @@ public class MyVegetableList implements List<Vegetable> {
             return (Vegetable) tail.getPrevious().getData();
         }
         if (index == 0) {
-            Node oldHead = head;
-            head = new Node();
-            head.setData(element);
+            Node oldHead = this.head;
+            this.head = new Node();
+            this.head.setData(element);
             this.head.setNext(oldHead);
             oldHead.setPrevious(this.head);
             size += 1;
-            return head.getData();
+            return this.head.getData();
         }
 
         Node from = this.head;
@@ -260,7 +260,7 @@ public class MyVegetableList implements List<Vegetable> {
             throw new IllegalArgumentException();
         }
 
-        Node from = head;
+        Node from = this.head;
         for (int i = 0; i < index; ++i) {
             from = from.getNext();
         }
@@ -287,8 +287,8 @@ public class MyVegetableList implements List<Vegetable> {
     public boolean add(Vegetable vegetable) {
         Node node = new Node();
         node.setData(vegetable);
-        if (head == null) {
-            head = node;
+        if (this.head == null) {
+            this.head = node;
             tail = node;
         } else {
             tail.setNext(node);

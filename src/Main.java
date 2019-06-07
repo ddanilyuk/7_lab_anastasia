@@ -83,7 +83,7 @@ public class Main {
         MyVegetableList.separator("Get some elements");
         System.out.println(myVegetableList.get(1));
 
-        myVegetableList.add(cucumber);
+        //myVegetableList.add(cucumber);
         System.out.println(myVegetableList.get(2));
 
 
