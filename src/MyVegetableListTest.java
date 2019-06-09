@@ -1,8 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 
 
 public class MyVegetableListTest {
@@ -142,7 +141,8 @@ public class MyVegetableListTest {
     public void lastIndexOf() {
         one.add(pomidor);
         one.add(kapusta);
-        Assert.assertEquals(1, one.lastIndexOf(kapusta));
+        one.add(kapusta);
+        Assert.assertEquals(2, one.lastIndexOf(kapusta));
         Assert.assertEquals(-1, one.indexOf(cucumber));
     }
 
@@ -151,24 +151,28 @@ public class MyVegetableListTest {
         another.add(pomidor);
         another.add(kapusta);
         another.add(cucumber);
-        Iterator<Vegetable> iter = another.iterator();
-        Assert.assertTrue(iter.hasNext());
-        Assert.assertEquals(pomidor, iter.next());
-        Assert.assertEquals(kapusta, iter.next());
-        Assert.assertEquals(cucumber, iter.next());
-        Assert.assertFalse(iter.hasNext());
+
+        // it's strange but working
+        ArrayList alphabets = new ArrayList<>(another);
+        ListIterator litr = alphabets.listIterator();
+
+        Assert.assertTrue(litr.hasNext());
+        Assert.assertEquals(pomidor, litr.next());
+        Assert.assertEquals(kapusta, litr.next());
+        Assert.assertEquals(cucumber, litr.next());
+        Assert.assertFalse(litr.hasNext());
     }
 
 
     @Test
     public void subList() {
-        another.add(pomidor);
         another.add(kapusta);
+        another.add(pomidor);
         another.add(cucumber);
         one.add(kapusta);
         one.add(pomidor);
         one.add(cucumber);
-        Assert.assertEquals(one.subList(1, 2), another.subList(0, 1));
+        Assert.assertEquals(one.subList(1, 2).get(0), another.subList(1, 2).get(0));
     }
 }
 

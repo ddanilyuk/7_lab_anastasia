@@ -9,24 +9,19 @@ public class Main {
         Vegetable pomidor = new Vegetable(200, "pomidor ", 3);
         Vegetable kapusta = new Vegetable(200, "kapusta ", 3);
         Vegetable cucumber = new Vegetable(123, "cucumber", 2);
+        Vegetable luk = new Vegetable(100,"luk", 2);
+        Vegetable some = new Vegetable(400, "some", 5);
+        Vegetable some2 = new Vegetable(500, "some2", 5);
+
 
 
         myVegetableList.add(pomidor);
         myVegetableList.add(cucumber);
         myVegetableList.add(kapusta);
+        myVegetableList.add(luk);
+        myVegetableList2.add(some);
         myVegetableList2.add(pomidor);
-
-
-        /*
-        MyVegetableList.separator("clear");
-        myVegetableList.clear();
-
-        System.out.println("add");
-        myVegetableList.addAll(0, myVegetableList2);
-        for (Vegetable vegetable : myVegetableList) {
-            System.out.println(vegetable);
-        }
-        */
+        myVegetableList2.add(cucumber);
 
 
 
@@ -64,6 +59,7 @@ public class Main {
         */
 
         MyVegetableList.separator("retainAll");
+        System.out.println(Arrays.toString(myVegetableList.toArray()));
         myVegetableList.retainAll(myVegetableList2);
         System.out.println(Arrays.toString(myVegetableList.toArray()));
 
@@ -74,7 +70,7 @@ public class Main {
 
         MyVegetableList.separator("Set some elements to some index");
         myVegetableList.set(0, kapusta);
-        myVegetableList.set(2, kapusta);
+        myVegetableList.set(1, kapusta);
         for (Vegetable vegetable : myVegetableList) {
             System.out.println(vegetable);
         }
@@ -83,7 +79,7 @@ public class Main {
         MyVegetableList.separator("Get some elements");
         System.out.println(myVegetableList.get(1));
 
-        //myVegetableList.add(cucumber);
+        myVegetableList2.add(some2);
         System.out.println(myVegetableList.get(2));
 
 
@@ -97,11 +93,22 @@ public class Main {
         for (Vegetable vegetable : myVegetableList2) {
             System.out.println(vegetable);
         }
+
         MyVegetableList.separator("adding to index 1");
-        myVegetableList.addAll(1, myVegetableList2);
+        myVegetableList.addAll(4, myVegetableList2);
         for (Vegetable vegetable : myVegetableList) {
             System.out.println(vegetable);
         }
+
+
+        MyVegetableList.separator("firstList");
+        for (Vegetable vegetable : myVegetableList) {
+            System.out.println(vegetable);
+        }
+        MyVegetableList.separator("sublist of myVegetableList");
+        List so = myVegetableList.subList(1, 3);
+        System.out.println(so.get(1));
+
 
     }
 }
