@@ -153,12 +153,15 @@ public class MyVegetableListTest {
         another.add(cucumber);
 
         // it's strange but working
-        ArrayList alphabets = new ArrayList<>(another);
+        List alphabets = new ArrayList<>(another);
         ListIterator litr = alphabets.listIterator();
 
         Assert.assertTrue(litr.hasNext());
+        Assert.assertEquals(0, litr.nextIndex());
         Assert.assertEquals(pomidor, litr.next());
+        Assert.assertEquals(1, litr.nextIndex());
         Assert.assertEquals(kapusta, litr.next());
+        Assert.assertEquals(2, litr.nextIndex());
         Assert.assertEquals(cucumber, litr.next());
         Assert.assertFalse(litr.hasNext());
     }
